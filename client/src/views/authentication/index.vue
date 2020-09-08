@@ -82,7 +82,7 @@ export default {
     async efetuarLogin () {
       this.loading = true
       console.log('push')
-      this.$router.push('/inicio')
+      this.$router.push('/home')
 
       this.loading = false
     }
