@@ -5,7 +5,14 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
+import VueQuill from 'vue-quill'
+
+Vue.use(VueQuill)
+
 Vue.config.productionTip = false
+
+Vue.component('modal', () => import('./components/modal'))
+Vue.component('gantt', () => import('./components/Gantt.vue'))
 
 new Vue({
   router,
