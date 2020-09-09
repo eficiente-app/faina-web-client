@@ -73,7 +73,8 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      color="white"
+      :color="$vuetify.theme.dark ? 'secondary' : 'white'"
+      :dark="$vuetify.theme.dark"
       absolute
       app
       clipped
@@ -113,7 +114,25 @@
           <v-list-item-content class="px-1">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
+        </v-list-item>
 
+        <v-list-item class="px-1 mx-2">
+          <v-list-item-icon>
+            <v-icon>mdi-weather-night</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              Nigth Mode
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-switch
+              v-model="$vuetify.theme.dark"
+              :ripple="false"
+              class="pa-0 na-0"
+            />
+          </v-list-item-action>
         </v-list-item>
 
       </v-list>
