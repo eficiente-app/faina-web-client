@@ -2,8 +2,9 @@
   <v-container>
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="registros"
       :search="search"
+      :loading="loading"
       class="elevation-0"
       sort-by="dataFim"
     >
@@ -52,17 +53,6 @@
           Reset
         </v-btn>
       </template>
-      <template v-slot:item.progresso="{ item }">
-        <v-progress-linear
-          v-model="item.progresso"
-          :color="getColorProgresso(item.progresso)"
-          height="25"
-        >
-          <strong>
-            {{ item.progresso }}%
-          </strong>
-        </v-progress-linear>
-      </template>
       <template v-slot:item.status="{ item }">
         <v-chip
           :color="getColorsStatus(item.status)"
@@ -71,22 +61,12 @@
           {{ item.status }}
         </v-chip>
       </template>
-
-      <template v-slot:item.classificacao="{ item }">
-        <v-chip
-          :color="getColorsClassificacao(item.classificacao)"
-          dark
-          label
-          outlined
-        >
-          {{ item.classificacao }}
-        </v-chip>
-      </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'TarefasPage',
 
@@ -123,80 +103,95 @@ export default {
         width: 61
       },
       {
-        text: 'Status',
+        text: 'Titulo',
         align: 'start',
         sortable: false,
-        value: 'status',
+        value: 'titulo',
         width: 100
-      },
-      {
-        text: 'Classificação',
-        align: 'start',
-        sortable: false,
-        value: 'classificacao',
-        width: 150
       },
       {
         text: 'Tipo',
         align: 'start',
         sortable: false,
-        value: 'tipo',
+        value: 'tipoNome',
+        width: 150
+      },
+      {
+        text: 'Classificação',
+        align: 'start',
+        sortable: false,
+        value: 'classificacaoNome',
         width: 200
       },
       {
-        text: 'Etapa',
+        text: 'Status',
         align: 'start',
         sortable: false,
-        value: 'etapa',
+        value: 'statusNome',
         width: 100
       },
       {
-        text: 'Projeto',
+        text: 'Conteúdo',
         align: 'start',
         sortable: false,
-        value: 'projeto',
+        value: 'conteudo',
         width: 100
       },
       {
         text: 'Inicio',
         align: 'start',
         sortable: false,
-        value: 'dataInicio',
+        value: 'inicioCronograma',
         width: 100
       },
       {
         text: 'Fim',
         align: 'start',
         sortable: false,
-        value: 'dataFim',
+        value: 'fimCronograma',
         width: 100
       },
       {
-        text: 'Progresso',
+        text: 'Inicio Etapa',
         align: 'start',
         sortable: false,
-        value: 'progresso'
+        value: 'inicioEtapas'
+      },
+      {
+        text: 'Fim Etapa',
+        align: 'start',
+        sortable: false,
+        value: 'fimEtapas'
       }
-    ]
+    ],
+    loading: false
   }),
 
+  computed: {
+    ...mapState('tarefas', [
+      'registros',
+      'tipos'
+    ])
+  },
+
+  created () {
+    this.listarRegistros()
+  },
+
   methods: {
+    ...mapActions('tarefas', [
+      'listar'
+    ]),
+    async listarRegistros () {
+      this.loading = true
+      await this.listar()
+      this.loading = false
+    },
     getColorsStatus (status) {
       if (status === 'Aberto') return 'info'
       else if (status === 'Atendimento') return 'success'
       else if (status === 'Concluido') return 'accent'
       else if (status === 'Aguardando Informações') return 'secondary'
-    },
-    getColorsClassificacao (status) {
-      if (status === 'Alto') return 'error'
-      else if (status === 'Baixo') return 'info'
-      else if (status === 'Médio') return 'warning'
-    },
-    getColorProgresso (progresso) {
-      if (progresso <= '10') return 'accent'
-      else if (progresso > '10' && progresso <= '30') return 'info'
-      else if (progresso > '30' && progresso <= '50') return 'success'
-      else if (progresso > '50') return 'secondary'
     }
   }
 }
