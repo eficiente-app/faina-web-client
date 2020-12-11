@@ -1,5 +1,14 @@
+// import axios from '@/plugins/axios'
+
 export const listar = async ({ commit }, params) => {
   try {
+    //Example use axios
+    // const res = await axios.post('/login', dados)
+
+    // if (!res.data.erro) {
+    //   commit('dados', res.data.dados)
+    // }
+
     const resultado = {
       dados: [
         {
