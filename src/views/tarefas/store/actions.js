@@ -2,7 +2,7 @@
 
 export const listar = async ({ commit }, params) => {
   try {
-    //Example use axios
+    // Example use axios
     // const res = await axios.post('/login', dados)
 
     // if (!res.data.erro) {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const Axios = axios.create({
-  baseURL: `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/`,
+  baseURL: `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/api`,
   headers: {
     Authorization: 'Bearer ' + localStorage.getItem('faina:token')
   }
