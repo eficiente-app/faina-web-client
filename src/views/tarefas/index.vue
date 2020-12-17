@@ -1,5 +1,52 @@
 <template>
   <v-container>
+    <modal
+      v-model="modal"
+      title="Adicionar Tarefa"
+      width="1200"
+      @salvar="salvarTeste()"
+    >
+      <v-form>
+        <validation-observer
+          ref="observer"
+        >
+          <v-container
+            fluid
+            grid-list-xs
+          >
+            <v-row dense>
+              <v-col
+                cols="12"
+                xl="2"
+                lg="3"
+                md="4"
+                sm="5"
+                xs="12"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Field Name"
+                  rules="required"
+                  vid="fieldName"
+                >
+                    <!-- :disabled="!form.id" -->
+                  <v-text-field
+                    v-model="form.fieldName"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    dense
+                    outlined
+                    label="Field Name"
+                  />
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-container>
+        </validation-observer>
+      </v-form>
+    </modal>
     <v-data-table
       :headers="headers"
       :items="registros"
@@ -34,8 +81,9 @@
         <v-icon
           class="mr-2"
           small
-          @click="''"
+          @click="listarRegistros()"
         >
+          <!-- @click="exibir(item.id)" -->
           mdi-pencil
         </v-icon>
         <v-icon
@@ -71,6 +119,11 @@ export default {
   name: 'TarefasPage',
 
   data: () => ({
+    form: {
+      id: null,
+      fieldName: null
+    },
+    modal: true,
     search: null,
     items: [
       { tipo: 'Chamado', classificacao: 'Alto', status: 'Aberto', etapa: 'Para Aprovação', projeto: 'Faina', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
@@ -184,8 +237,40 @@ export default {
     ]),
     async listarRegistros () {
       this.loading = true
+
       await this.listar()
+
       this.loading = false
+    },
+    async salvarTeste () {
+      if (await this.$refs.observer.validate()) {
+        const formulario = {
+          id: this.form.id || undefined,
+          name: this.fieldName || undefined
+        }
+
+        let resposta
+        if (formulario.id) resposta = await this.editar(this.formulario)
+        else resposta = await this.salvar(this.formulario)
+
+        if (resposta && !resposta.erro) {
+          this.listarRegistros()
+        }
+      }
+    },
+    async exibir (id) {
+      const res = await this.exibir(id)
+
+      if (res && !res.erro) {
+        this.modal = true
+      }
+    },
+    async deletar (id) {
+      const res = await this.deletar(id)
+
+      if (res && !res.erro) {
+        this.listarRegistros()
+      }
     },
     getColorsStatus (status) {
       if (status === 'Aberto') return 'info'
