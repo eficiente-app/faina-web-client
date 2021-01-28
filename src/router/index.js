@@ -30,6 +30,10 @@ const routes = [
       {
         path: '/gantt',
         component: () => import('../views/gantt/')
+      },
+      {
+        path: '/pastas',
+        component: () => import('../views/pastas/')
       }
     ]
   },

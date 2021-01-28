@@ -14,7 +14,7 @@
         transition="scale-transition"
         width="50"
       />
-      <v-toolbar-title class="ml-0 pl-0 display-2 font-weight-bold">ina</v-toolbar-title>
+      <v-toolbar-title class="ml-0 pl-0 display-2 font-weight-bold">Faina</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -91,6 +91,12 @@
               mdi-chart-gantt
             </v-icon>
             Gantt
+          </v-tab>
+          <v-tab to="/pastas">
+            <v-icon left>
+              mdi-folder
+            </v-icon>
+            Pastas
           </v-tab>
         </v-tabs>
       </template>

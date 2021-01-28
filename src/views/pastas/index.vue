@@ -1,0 +1,408 @@
+<template>
+  <v-container>
+    <modal
+      v-if="modal"
+      v-model="modal"
+      title="Adicionar Pasta"
+      width="1200"
+      @salvar="salvarRegistro()"
+      @input="reset()"
+    >
+      <v-form>
+        <validation-observer
+          ref="observer"
+        >
+          <v-container
+            fluid
+            grid-list-xs
+          >
+            <v-row dense>
+              <v-col
+                cols="6"
+                lg="1"
+                md="3"
+                xs="6"
+              >
+                <!-- rules="required" -->
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="id"
+                  vid="id"
+                >
+                  <v-text-field
+                    v-model="form.id"
+                    :disabled="true"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    label="id"
+                    dense
+                    outlined
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col
+                cols="6"
+                lg="1"
+                md="3"
+                xs="6"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Tipo"
+                  rules="required"
+                  vid="tipo_id"
+                >
+                  <v-text-field
+                    v-model="form.tipo_id"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    label="Tipo"
+                    dense
+                    outlined
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col
+                cols="6"
+                lg="1"
+                md="3"
+                xs="6"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Projeto"
+                  rules="required"
+                  vid="projeto_id"
+                >
+                  <v-text-field
+                    v-model="form.projeto_id"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    label="Projeto"
+                    dense
+                    outlined
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col
+                cols="10"
+                lg="4"
+                md="5"
+                xs="10"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Nome"
+                  rules="required"
+                  vid="nome"
+                >
+                  <v-text-field
+                    v-model="form.nome"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    label="Nome"
+                    dense
+                    outlined
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col
+                cols="12"
+                lg="5"
+                md="6"
+                xs="12"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Descricao"
+                  rules="required"
+                  vid="descricao"
+                >
+                  <v-text-field
+                    v-model="form.descricao"
+                    :error-messages="errors"
+                    :hide-details="!errors.length"
+                    @keydown.enter="salvarRegistro()"
+                    class="required"
+                    label="Descrição"
+                    dense
+                    outlined
+                  />
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-container>
+        </validation-observer>
+      </v-form>
+    </modal>
+
+    <v-data-table
+      :headers="headers"
+      :items="pastas"
+      :search="search"
+      :loading="loading"
+      class="elevation-0"
+      sort-by="dataFim"
+    >
+      <template v-slot:top>
+        <v-toolbar
+          flat
+        >
+          <v-toolbar-title>
+            Lista de Pastas
+          </v-toolbar-title>
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          />
+          <v-spacer />
+          <v-menu
+            bottom
+            center
+            offset-y
+            open-on-hover
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                dark
+                icon
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                @click="exibirRegistro()"
+              >
+                <v-list-item-title>
+                  Adicionar
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-toolbar>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          hide-details
+          label="Filtro"
+          single-line
+        />
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          class="mr-2"
+          small
+          @click="exibirRegistro(item.id)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small
+          @click="deletarRegistro(item.id)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:item.status="{ item }">
+        <v-chip
+          :color="getColorsStatus(item.Status)"
+          dark
+        >
+          {{ item.status }}
+        </v-chip>
+      </template>
+    </v-data-table>
+  </v-container>
+</template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+export default {
+  name: 'PastasPage',
+
+  data: () => ({
+    form: {
+      id: null,
+      tipo_id: null,
+      projeto_id: null,
+      nome: null,
+      descricao: null,
+      origem_incluido_id: null,
+      origem_alterado_id: null,
+      origem_excluido_id: null,
+      incluido_id: null,
+      incluido_em: null,
+      alterado_id: null,
+      alterado_em: null,
+      excluido_id: null,
+      excluido_em: null
+    },
+    modal: false,
+    controle: {
+      visualizar: false
+    },
+    search: null,
+    headers: [
+      {
+        text: 'Actions',
+        align: 'center',
+        sortable: false,
+        value: 'actions',
+        width: 61
+      },
+      {
+        text: 'ID',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+        width: 100
+      },
+      {
+        text: 'Tipo',
+        align: 'start',
+        sortable: false,
+        value: 'tipo_id',
+        width: 150
+      },
+      {
+        text: 'Projeto',
+        align: 'start',
+        sortable: false,
+        value: 'projeto_id',
+        width: 150
+      },
+      {
+        text: 'Nome',
+        align: 'start',
+        sortable: false,
+        value: 'nome',
+        width: 200
+      },
+      {
+        text: 'Descrição',
+        align: 'start',
+        sortable: false,
+        value: 'descricao',
+        width: 100
+      }
+    ],
+    loading: false
+  }),
+
+  computed: {
+    ...mapState('pastas', [
+      'pastas'
+    ])
+  },
+
+  created () {
+    this.listarRegistros()
+  },
+
+  methods: {
+    ...mapActions('pastas', [
+      'listar',
+      'exibir',
+      'inserir',
+      'editar',
+      'deletar'
+    ]),
+    async listarRegistros () {
+      this.loading = true
+
+      await this.listar()
+
+      this.loading = false
+    },
+    async salvarRegistro () {
+      if (await this.$refs.observer.validate()) {
+        const formulario = {
+          id: this.form.id || undefined,
+          tipo_id: this.form.tipo_id || undefined,
+          projeto_id: this.form.projeto_id || undefined,
+          nome: this.form.nome || undefined,
+          descricao: this.form.descricao || undefined,
+          incluido_id: this.form.incluido_id || undefined,
+          incluido_em: this.form.incluido_em || undefined,
+          alterado_id: '1',
+          alterado_em: '2021-01-07 00:00:00',
+          excluido_id: this.form.excluido_id || undefined,
+          excluido_em: this.form.excluido_em || undefined
+        }
+
+        let resposta
+        if (formulario.id) {
+          resposta = await this.editar(formulario)
+        } else {
+          resposta = await this.inserir(formulario)
+        }
+        console.log(resposta)
+        if (resposta && !resposta.erro) {
+          this.modal = false
+          this.reset()
+          this.listarRegistros()
+        }
+      }
+    },
+    async exibirRegistro (id) {
+      if (id) {
+        const res = await this.exibir(id)
+        if (res && !res.erro) {
+          this.form = res
+        }
+      }
+      this.modal = true
+    },
+    async deletarRegistro (id) {
+      const res = await this.deletar(id)
+      console.log(res)
+      if (res && !res.erro) {
+        this.reset()
+        this.listarRegistros()
+      }
+    },
+    async limpar () {
+      this.form = {
+        id: null,
+        tipo_id: null,
+        projeto_id: null,
+        nome: null,
+        descricao: null,
+        origem_incluido_id: null,
+        origem_alterado_id: null,
+        origem_excluido_id: null,
+        incluido_id: null,
+        incluido_em: null,
+        alterado_id: null,
+        alterado_em: null,
+        excluido_id: null,
+        excluido_em: null
+      }
+    },
+    reset () {
+      this.limpar()
+    },
+
+    getColorsStatus (status) {
+      if (status === 'Aberto') return 'info'
+      else if (status === 'Atendimento') return 'success'
+      else if (status === 'Concluido') return 'accent'
+      else if (status === 'Aguardando Informações') return 'secondary'
+    }
+  }
+}
+</script>
