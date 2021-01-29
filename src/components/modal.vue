@@ -16,7 +16,7 @@
             icon
             left
             size="45"
-            @click="$emit('close')"
+            @click="$emit('input', false)"
           >
             <v-icon class="pa-0 ma-0">
               mdi-close
@@ -29,10 +29,10 @@
           <slot />
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions v-if="options && options.actions && options.actions.length">
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             v-for="btn in options.actions"
             :color="btn.color"
@@ -40,12 +40,14 @@
             :outlined="btn.outlined"
             @click="$emit(`${btn.emit}`)"
           >
-            <v-icon left>{{btn.icon}}</v-icon>
+            <v-icon left>
+              {{btn.icon}}
+            </v-icon>
             {{ btn.title }}
           </v-btn>
         </v-card-actions>
         <v-card-actions v-else>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             v-for="def in optionsDefalt.actions"
             :color="def.color"
@@ -53,7 +55,9 @@
             :outlined="def.outlined"
             @click="$emit(`${def.emit}`)"
           >
-            <v-icon left>{{def.icon}}</v-icon>
+            <v-icon left>
+              {{def.icon}}
+            </v-icon>
             {{ def.title }}
           </v-btn>
         </v-card-actions>
@@ -90,7 +94,7 @@ export default {
           title: 'Cancel',
           color: 'error',
           icon: 'mdi-cancel',
-          emit: 'cancel',
+          emit: 'input',
           outlined: false
         }
       ]
