@@ -1,10 +1,8 @@
 <template>
   <v-container>
     <modal
-      v-if="modal"
       v-model="modal"
-      title="Adicionar Pasta"
-      width="1200"
+      :options="modalOptions"
       @salvar="salvarRegistro()"
       @input="reset()"
     >
@@ -165,42 +163,34 @@
             vertical
           />
           <v-spacer />
-          <v-menu
-            bottom
-            center
-            offset-y
-            open-on-hover
+          <v-btn
+            color="secondary"
+            fab
+            dark
+            small
+            title="Adicionar Registro"
+            @click="exibirRegistro()"
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                icon
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-
-            <v-list>
-              <v-list-item
-                @click="exibirRegistro()"
-              >
-                <v-list-item-title>
-                  Adicionar
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+            <v-icon>
+            mdi-plus
+            </v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          hide-details
-          label="Filtro"
-          single-line
-        />
+        <v-row
+          class="justify-left"
+        >
+          <v-col
+            cols="12"
+          >
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              hide-details
+              label="Filtro"
+              single-line
+            />
+          </v-col>
+        </v-row>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
@@ -212,10 +202,42 @@
         </v-icon>
         <v-icon
           small
-          @click="deletarRegistro(item.id)"
+          @click="dialog = true, registroId = item.id"
         >
           mdi-delete
         </v-icon>
+        <v-dialog
+          v-model="dialog"
+          persistent
+          max-width="290"
+          class="elevation-1"
+        >
+          <v-card>
+            <v-card-title class="headline">
+              Atenção
+            </v-card-title>
+            <v-card-text>
+              <spam v-html="'Deseja deletar este <b>registro?</b>'" />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="green darken-1"
+                text
+                @click="dialog = false, deletarRegistro()"
+              >
+                Aceitar
+              </v-btn>
+              <v-btn
+                color="green darken-1"
+                text
+                @click="dialog = false"
+              >
+                Cancelar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </template>
       <template v-slot:item.status="{ item }">
         <v-chip
@@ -252,6 +274,10 @@ export default {
       excluido_em: null
     },
     modal: false,
+    modalOptions: {
+      title: 'Adicionar Pasta',
+      width: '1200'
+    },
     controle: {
       visualizar: false
     },
@@ -300,7 +326,9 @@ export default {
         width: 100
       }
     ],
-    loading: false
+    loading: false,
+    dialog: false,
+    registroId: null
   }),
 
   computed: {
@@ -367,12 +395,13 @@ export default {
       }
       this.modal = true
     },
-    async deletarRegistro (id) {
-      const res = await this.deletar(id)
+    async deletarRegistro () {
+      const res = await this.deletar(this.registroId)
       console.log(res)
       if (res && !res.erro) {
         this.reset()
         this.listarRegistros()
+        this.registroId = null
       }
     },
     async limpar () {
