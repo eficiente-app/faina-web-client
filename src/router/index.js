@@ -34,6 +34,10 @@ const routes = [
       {
         path: '/pastas',
         component: () => import('../views/pastas/')
+      },
+      {
+        path: '/etapas',
+        component: () => import('../views/etapas/')
       }
     ]
   },

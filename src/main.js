@@ -18,6 +18,7 @@ Vue.use(Chartkick.use(Chart))
 Vue.config.productionTip = false
 
 Vue.component('snack', SnackBar)
+Vue.component('fnatable', () => import('./components/table'))
 Vue.component('modal', () => import('./components/modal'))
 
 new Vue({

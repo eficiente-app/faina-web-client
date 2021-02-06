@@ -4,6 +4,7 @@ import app from './app'
 import dashboard from '../views/dashboard/store/'
 import pastas from '../views/pastas/store'
 import tarefas from '../views/tarefas/store'
+import etapas from '../views/etapas/store'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     app,
     dashboard,
     pastas,
-    tarefas
+    tarefas,
+    etapas
   }
 })

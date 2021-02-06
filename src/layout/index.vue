@@ -98,6 +98,12 @@
             </v-icon>
             Pastas
           </v-tab>
+          <v-tab to="/etapas">
+            <v-icon left>
+              mdi-clock
+            </v-icon>
+            Etapas
+          </v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
