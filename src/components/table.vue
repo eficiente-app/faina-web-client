@@ -185,7 +185,7 @@
                   text
                   @click="itemsPerPage = rowsPerPage; config = false; setPreferences()"
                 >
-                  Confimar
+                  Confirmar
                 </v-btn>
               </v-card-actions>
             </v-card>
