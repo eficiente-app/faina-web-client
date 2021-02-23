@@ -30,15 +30,15 @@ import { mapState } from 'vuex'
 export default {
   name: 'SnackBarComponnent',
 
+  data: () => ({
+    snackbar: false,
+    text: 'Teste'
+  }),
+
   computed: {
     ...mapState('app', [
       'notificacao'
     ])
-  },
-
-  data: () => ({
-    snackbar: false,
-    text: 'Teste'
-  })
+  }
 }
 </script>

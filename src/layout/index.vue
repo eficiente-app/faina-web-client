@@ -34,8 +34,8 @@
             text
             plain
             v-bind="attrs"
-            v-on="on"
             class="caption font-weight-light ml-4"
+            v-on="on"
           >
             Serviços
             <v-icon
@@ -47,8 +47,8 @@
         </template>
 
         <v-list
-          v-for="list in menuList"
-          :key="list"
+          v-for="(list, indx) in menuList"
+          :key="indx"
           subheader
           flat
           dense
@@ -60,16 +60,16 @@
           </v-subheader>
 
           <v-list-item
-            v-for="itens in list.itens"
-            :key="itens"
+            v-for="(itens, idx) in list.itens"
+            :key="idx"
             link
             :to="itens.path"
           >
             <v-list-item-icon
             >
               <v-icon
-                v-text="itens.icon"
                 class="ma-0 pa-0"
+                v-text="itens.icon"
               />
             </v-list-item-icon>
 
@@ -77,8 +77,8 @@
               class="ma-0 pa-0"
             >
               <v-list-item-title
-                v-text="itens.descricao"
                 class="ma-0 pa-0"
+                v-text="itens.descricao"
               />
               <!-- <v-list-item-subtitle>Change your Google+ profile photo</v-list-item-subtitle> -->
             </v-list-item-content>
@@ -170,15 +170,25 @@
       <v-spacer />
 
       <!-- avatar -->
-      <v-btn
-        dark
-        icon
-        small
+      <v-badge
+        color="warning"
+        content="2"
+        class="mx-4"
+        overlap
+        offset-x="6"
+        offset-y="15"
       >
-        <v-icon>
-          mdi-bell
-        </v-icon>
-      </v-btn>
+        <v-btn
+          dark
+          icon
+          small
+        >
+          <v-icon>
+            mdi-bell
+          </v-icon>
+        </v-btn>
+      </v-badge>
+
       <v-btn
         dark
         icon
@@ -209,7 +219,7 @@
         <v-tabs
           align-with-title
           class="ml-5"
-          color="primary"
+          color="grey darken-2"
           dark
         >
           <!-- background-color="primary" -->
@@ -266,10 +276,11 @@
     <v-footer
       app
       padless
-      height="30px"
+      height="25px"
+      color="primary"
     >
       <v-col
-        class="text-center ma-0 pa-0"
+        class="text-center ma-0 pa-0 white--text"
         cols="12"
       >
         {{ new Date().getFullYear() }} — <strong>Faina</strong>

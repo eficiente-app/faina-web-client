@@ -1,52 +1,5 @@
 <template>
   <v-container>
-    <modal
-      v-model="modal"
-      title="Adicionar Tarefa"
-      width="1200"
-      @salvar="salvarTeste()"
-    >
-      <v-form>
-        <validation-observer
-          ref="observer"
-        >
-          <v-container
-            fluid
-            grid-list-xs
-          >
-            <v-row dense>
-              <v-col
-                cols="12"
-                xl="2"
-                lg="3"
-                md="4"
-                sm="5"
-                xs="12"
-              >
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Field Name"
-                  rules="required"
-                  vid="fieldName"
-                >
-                    <!-- :disabled="!form.id" -->
-                  <v-text-field
-                    v-model="form.fieldName"
-                    :error-messages="errors"
-                    :hide-details="!errors.length"
-                    @keydown.enter="salvarRegistro()"
-                    class="required"
-                    dense
-                    outlined
-                    label="Field Name"
-                  />
-                </validation-provider>
-              </v-col>
-            </v-row>
-          </v-container>
-        </validation-observer>
-      </v-form>
-    </modal>
     <v-data-table
       :headers="headers"
       :items="registros"
@@ -56,9 +9,7 @@
       sort-by="dataFim"
     >
       <template v-slot:top>
-        <v-toolbar
-          flat
-        >
+        <v-toolbar flat>
           <v-toolbar-title>
             Lista de Tarefas
           </v-toolbar-title>
@@ -94,11 +45,9 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn
-          color="primary"
-        >
-          Reset
-        </v-btn>
+        <v-row class="text-center justify-center">
+          <span>Nenhum Registro</span>
+        </v-row>
       </template>
       <template v-slot:item.status="{ item }">
         <v-chip
@@ -115,7 +64,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-  name: 'TarefasPage',
+  name: 'TasksPage',
 
   data: () => ({
     form: {
@@ -124,28 +73,6 @@ export default {
     },
     modal: true,
     search: null,
-    items: [
-      { tipo: 'Chamado', classificacao: 'Alto', status: 'Aberto', etapa: 'Para Aprovação', projeto: 'Faina', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Melhorias', classificacao: 'Baixo', status: 'Aberto', etapa: '', projeto: 'Faina', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '30' },
-      { tipo: 'Tarefa Interna', classificacao: 'Médio', status: 'Atendimento', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '50' },
-      { tipo: 'Tarefa Interna', classificacao: 'Baixo', status: 'Concluido', etapa: 'Para Aprovação', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Chamado', classificacao: 'Baixo', status: 'Aguardando Informações', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '90' },
-      { tipo: 'Manutenção', classificacao: 'Baixo', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '100' },
-      { tipo: 'Chamado', classificacao: 'Alto', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Tarefa Interna', classificacao: 'Alto', status: 'Aberto', etapa: 'Aguardando Verisonamento', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Chamado', classificacao: 'Alto', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Melhorias', classificacao: 'Alto', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Tarefa Interna', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Manutenção', classificacao: 'Médio', status: 'Aberto', etapa: 'Iniciado', projeto: 'Faina', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Chamado', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Tarefa Interna', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Melhorias', classificacao: 'Médio', status: 'Aberto', etapa: 'Teste', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Chamado', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Tarefa Interna', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Chamado', classificacao: 'Médio', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Manutenção', classificacao: 'Alto', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' },
-      { tipo: 'Melhorias', classificacao: 'Baixo', status: 'Aberto', etapa: '', projeto: '', dataInicio: '10/11/2020', dataFim: '12/11/2020', progresso: '10' }
-    ],
     headers: [
       {
         text: 'Actions',

@@ -32,11 +32,11 @@
                     :disabled="true"
                     :error-messages="errors"
                     :hide-details="!errors.length"
-                    @keydown.enter="salvarRegistro()"
                     class="required"
                     label="id"
                     dense
                     outlined
+                    @keydown.enter="salvarRegistro()"
                   />
                 </validation-provider>
               </v-col>
@@ -56,11 +56,11 @@
                     v-model="form.nome"
                     :error-messages="errors"
                     :hide-details="!errors.length"
-                    @keydown.enter="salvarRegistro()"
                     class="required"
                     label="Nome"
                     dense
                     outlined
+                    @keydown.enter="salvarRegistro()"
                   />
                 </validation-provider>
               </v-col>
@@ -80,11 +80,11 @@
                     v-model="form.descricao"
                     :error-messages="errors"
                     :hide-details="!errors.length"
-                    @keydown.enter="salvarRegistro()"
                     class="required"
                     label="Descrição"
                     dense
                     outlined
+                    @keydown.enter="salvarRegistro()"
                   />
                 </validation-provider>
               </v-col>
@@ -104,11 +104,11 @@
                     v-model="form.ativo"
                     :error-messages="errors"
                     :hide-details="!errors.length"
-                    @keydown.enter="salvarRegistro()"
                     class="required"
                     label="Ativo"
                     dense
                     outlined
+                    @keydown.enter="salvarRegistro()"
                   />
                 </validation-provider>
               </v-col>

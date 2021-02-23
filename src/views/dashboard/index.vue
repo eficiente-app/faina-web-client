@@ -12,7 +12,7 @@
               color="error"
               size="100"
             >
-            mdi-playlist-plus
+              mdi-playlist-plus
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -37,7 +37,7 @@
               color="secondary"
               class="pa-0 ma-0"
             >
-            mdi-loading
+              mdi-loading
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -62,7 +62,7 @@
               color="success"
               size="100"
             >
-            mdi-calendar-check-outline
+              mdi-calendar-check-outline
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -87,7 +87,7 @@
               class="pa-0 ma-0"
               size="100"
             >
-            mdi-help
+              mdi-help
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -112,7 +112,7 @@
               color="warning"
               size="100"
             >
-            mdi-timer-off
+              mdi-timer-off
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -136,7 +136,7 @@
               color="accent"
               size="100"
             >
-            mdi-pause
+              mdi-pause
             </v-icon>
             <v-list-item-content>
               <div class="text-right overline mb-2">
@@ -281,16 +281,6 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'DashboardPage',
-
-  computed: {
-    ...mapState('dashboard', [
-      'registros'
-    ])
-  },
-
-  created () {
-    this.login()
-  },
 
   data: () => ({
     search: null,
@@ -554,6 +544,16 @@ export default {
       }
     ]
   }),
+
+  computed: {
+    ...mapState('dashboard', [
+      'registros'
+    ])
+  },
+
+  created () {
+    this.login()
+  },
 
   methods: {
     ...mapActions('dashboard', [

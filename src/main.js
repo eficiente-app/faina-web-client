@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueMeta from 'vue-meta'
 import './registerServiceWorker'
 import './plugins/axios'
 import '@/plugins/validate'
@@ -14,6 +15,9 @@ import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 
 Vue.use(Chartkick.use(Chart))
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true
+})
 
 Vue.config.productionTip = false
 
