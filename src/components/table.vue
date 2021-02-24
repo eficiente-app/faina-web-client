@@ -33,7 +33,7 @@
           @click="$emit('new')"
         >
           <v-icon>
-          mdi-plus
+            mdi-plus
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -74,7 +74,7 @@
               @click="page = page > 1 ? page - 1 : 1"
             >
               <v-icon>
-              mdi-chevron-left
+                mdi-chevron-left
               </v-icon>
             </v-btn>
             {{ page }}
@@ -85,7 +85,7 @@
               @click="page = page < pageCount ? page + 1 : pageCount"
             >
               <v-icon>
-              mdi-chevron-right
+                mdi-chevron-right
               </v-icon>
             </v-btn>
             <v-btn
@@ -161,9 +161,9 @@
                       Colunas Visíveis
                     </div>
                     <v-switch
-                      v-model="editPreferences"
                       v-for="n in options.headers"
                       :key="n.text"
+                      v-model="editPreferences"
                       :label="n.text"
                       :value="n"
                       hide-details
@@ -259,6 +259,12 @@
 export default {
   name: 'TableComponent',
 
+  props: {
+    options: {
+      default: () => {}
+    }
+  },
+
   data: () => ({
     /**
      * @author Rafael Machado
@@ -285,12 +291,6 @@ export default {
     headers: [],
     editPreferences: []
   }),
-
-  props: {
-    options: {
-      default: () => {}
-    }
-  },
 
   async created () {
     this.headers = this.options.headers

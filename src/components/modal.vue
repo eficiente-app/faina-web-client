@@ -35,8 +35,8 @@
           <v-spacer />
           <v-btn
             v-for="btn in options.actions"
-            :color="btn.color"
             :key="btn.title"
+            :color="btn.color"
             :outlined="btn.outlined"
             @click="$emit(`${btn.emit}`)"
           >
@@ -50,8 +50,8 @@
           <v-spacer />
           <v-btn
             v-for="def in optionsDefalt.actions"
-            :color="def.color"
             :key="def.title"
+            :color="def.color"
             :outlined="def.outlined"
             @click="$emit(`${def.emit}`)"
           >
@@ -69,6 +69,16 @@
 <script>
 export default {
   name: 'DialogComponent',
+
+  props: {
+    options: {
+      default: () => {}
+    },
+    value: {
+      required: true,
+      type: Boolean
+    }
+  },
 
   data: () => ({
     /**
@@ -99,16 +109,6 @@ export default {
         }
       ]
     }
-  }),
-
-  props: {
-    options: {
-      default: () => {}
-    },
-    value: {
-      required: true,
-      type: Boolean
-    }
-  }
+  })
 }
 </script>

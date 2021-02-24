@@ -88,17 +88,17 @@
             </v-chip>
           </template>
           <template v-slot:expanded-item="{ item }">
-          <v-row dense>
-            <td colspan="10" class="pa-0 ma-0">
-              {{ item }} // Será implementado os Níveis de expand
-              // Projetos
-              // Pastas
-              // Tarefas
-            </td>
+            <v-row dense>
+              <td colspan="10" class="pa-0 ma-0">
+                {{ item }} // Será implementado os Níveis de expand
+                // Projetos
+                // Pastas
+                // Tarefas
+              </td>
             <!-- <v-col>
             </v-col> -->
-          </v-row>
-        </template>
+            </v-row>
+          </template>
         </v-data-table>
       </v-col>
       <v-col cols="4">

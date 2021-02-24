@@ -10,6 +10,15 @@
 export default {
   name: 'App',
 
+  metaInfo: {
+    title: 'Faina',
+    titleTemplate: '%s - Tarefas',
+    htmlAttrs: {
+      lang: 'en',
+      amp: true
+    }
+  },
+
   components: {
     //
   },
