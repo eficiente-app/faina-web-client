@@ -229,6 +229,12 @@
             </v-icon>
             Dashboard
           </v-tab>
+          <v-tab to="/view/list">
+            <v-icon left>
+              mdi-view-list
+            </v-icon>
+            Lista
+          </v-tab>
           <v-tab to="/tarefas">
             <v-icon left>
               mdi-format-list-bulleted-type

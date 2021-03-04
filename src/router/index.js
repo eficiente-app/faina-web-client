@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../layout'
+import view from './view'
 
 Vue.use(VueRouter)
 
@@ -38,7 +39,8 @@ const routes = [
       {
         path: '/etapas',
         component: () => import('../views/etapas/')
-      }
+      },
+      ...view
     ]
   },
   {
